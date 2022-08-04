@@ -20,9 +20,14 @@ namespace CognitiveServices.OCR.Service
             var textHeaders = await client.ReadInStreamAsync(image);
 
             var operationLocation = textHeaders.OperationLocation;
-            var operationId = operationLocation.Split('/').Last();
+            var operationId = operationLocation?.Split('/')?.Last();
 
-            var results = await client.GetReadResultAsync(Guid.Parse(operationId));
+            if (Guid.TryParse(operationId, out Guid operationIdValue) == false)
+            {
+                return new List<string>();
+            }
+
+            var results = await client.GetReadResultAsync(operationIdValue);
 
             var textUrlFileResults = results.AnalyzeResult.ReadResults.FirstOrDefault();
 

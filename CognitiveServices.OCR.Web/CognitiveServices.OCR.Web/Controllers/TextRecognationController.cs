@@ -17,7 +17,7 @@ namespace CognitiveServices.OCR.Web.Controllers
         [HttpGet]
         public async Task<TextRecognationModel> Get()
         {
-            var mockedImage = new FileStream("test.png", FileMode.Open);
+            var mockedImage = new FileStream("test2.png", FileMode.Open);
 
             var recognizedLines = await _textRecogniationService.ReadTextFromImageAsync(mockedImage);
 

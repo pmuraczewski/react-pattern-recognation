@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import originalImage from './../test.png';
+import originalImage from './../test2.png';
 
 export class FetchData extends Component {
   static displayName = FetchData.name;
