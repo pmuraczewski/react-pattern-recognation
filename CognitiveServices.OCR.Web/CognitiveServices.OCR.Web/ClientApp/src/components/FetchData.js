@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import originalImage from './../test.png';
 
 export class FetchData extends Component {
   static displayName = FetchData.name;
@@ -14,26 +15,22 @@ export class FetchData extends Component {
 
   static renderForecastsTable(forecasts) {
     return (
-      <table className='table table-striped' aria-labelledby="tabelLabel">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          {forecasts.map(forecast =>
-            <tr key={forecast.date}>
-              <td>{forecast.date}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <div className='row'>
+        <div className='col-md-6'>
+          <img src={originalImage} />
+        </div>
+        <div className='col-md-6'>
+          <table className='table table-striped' aria-labelledby="tabelLabel">
+            <tbody>
+              {forecasts.recognizedLines.map(line =>
+                <tr>
+                  <td>{line}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     );
   }
 
@@ -52,7 +49,7 @@ export class FetchData extends Component {
   }
 
   async populateWeatherData() {
-    const response = await fetch('weatherforecast');
+    const response = await fetch('textrecognation');
     const data = await response.json();
     this.setState({ forecasts: data, loading: false });
   }

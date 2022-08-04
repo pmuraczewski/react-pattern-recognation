@@ -1,10 +1,35 @@
-﻿namespace CognitiveServices.OCR.Service
+﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+using Microsoft.Extensions.Options;
+
+namespace CognitiveServices.OCR.Service
 {
     public class TextRecogniationService : ITextRecogniationService
     {
-        public string[] ReadTextFromImage(byte[] image)
+        private readonly AzureCognitiveServicesConfig _config;
+
+        public TextRecogniationService(IOptions<AzureCognitiveServicesConfig> options)
         {
-            return new string[] { "aaa" };
+            _config = options.Value;
+        }
+
+        public async Task<List<string>> ReadTextFromImageAsync(Stream image)
+        {
+            var client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(_config.SubscriptionKey)) { Endpoint = _config.Endpoint };
+
+            var textHeaders = await client.ReadInStreamAsync(image);
+
+            var operationLocation = textHeaders.OperationLocation;
+            var operationId = operationLocation.Split('/').Last();
+
+            var results = await client.GetReadResultAsync(Guid.Parse(operationId));
+
+            var textUrlFileResults = results.AnalyzeResult.ReadResults.FirstOrDefault();
+
+            return
+                textUrlFileResults == null
+                    ? new List<string>()
+                    : textUrlFileResults.Lines.Select(t => t.Text).ToList();
         }
     }
 }

@@ -6,6 +6,8 @@ builder.Services.AddScoped<ITextRecogniationService, TextRecogniationService>();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.Configure<AzureCognitiveServicesConfig>(builder.Configuration.GetSection(typeof(AzureCognitiveServicesConfig).Name));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

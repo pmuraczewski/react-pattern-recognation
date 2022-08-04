@@ -2,6 +2,6 @@
 {
     public interface ITextRecogniationService
     {
-        string[] ReadTextFromImage(byte[] image);
+        Task<List<string>> ReadTextFromImageAsync(Stream image);
     }
 }
