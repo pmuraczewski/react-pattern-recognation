@@ -1,4 +1,5 @@
-using CognitiveServices.OCR.Service;
+using CognitiveServices.OCR.Service.Configs;
+using CognitiveServices.OCR.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

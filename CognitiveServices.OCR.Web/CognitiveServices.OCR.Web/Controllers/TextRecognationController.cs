@@ -1,4 +1,4 @@
-﻿using CognitiveServices.OCR.Service;
+﻿using CognitiveServices.OCR.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CognitiveServices.OCR.Web.Controllers
@@ -17,13 +17,14 @@ namespace CognitiveServices.OCR.Web.Controllers
         [HttpGet]
         public async Task<TextRecognationModel> Get()
         {
-            var mockedImage = new FileStream("test2.png", FileMode.Open);
+            var mockedImage = new FileStream("test.png", FileMode.Open);
 
             var recognizedLines = await _textRecogniationService.ReadTextFromImageAsync(mockedImage);
 
             return new TextRecognationModel
             {
-                RecognizedLines = recognizedLines,
+                RecognizedLines = recognizedLines.RecognizedLines,
+                TranslatedText = recognizedLines.TranslatedText
             };
         }
     }

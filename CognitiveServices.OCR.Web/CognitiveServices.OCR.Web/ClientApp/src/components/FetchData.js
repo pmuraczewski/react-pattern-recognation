@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import originalImage from './../test2.png';
+import originalImage from './../test.png';
 
 export class FetchData extends Component {
   static displayName = FetchData.name;
@@ -16,10 +16,10 @@ export class FetchData extends Component {
   static renderForecastsTable(forecasts) {
     return (
       <div className='row'>
-        <div className='col-md-6'>
+        <div className='col-md-4'>
           <img src={originalImage} />
         </div>
-        <div className='col-md-6'>
+        <div className='col-md-4'>
           <table className='table table-striped' aria-labelledby="tabelLabel">
             <tbody>
               {forecasts.recognizedLines.map(line =>
@@ -29,6 +29,9 @@ export class FetchData extends Component {
               )}
             </tbody>
           </table>
+        </div>
+        <div className='col-md-4'>
+          <span>{forecasts.translatedText}</span>
         </div>
       </div>
     );
